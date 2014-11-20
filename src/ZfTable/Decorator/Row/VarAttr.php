@@ -40,7 +40,11 @@ class VarAttr extends AbstractRowDecorator
 
         foreach ($this->vars as $var) {
             $actualRow = $this->getRow()->getActualRow();
-            $values[] = $actualRow[$var];
+            if (is_array($actualRow)) {
+                $values[] = $actualRow[$var];
+            } else {
+                $values[] = $actualRow->$var();
+            }
         }
         $value = vsprintf($this->value, $values);
 
